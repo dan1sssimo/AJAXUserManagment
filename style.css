@@ -1,0 +1,24 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background:#f8f8f8
+}
+.active-circle {
+    color: green;
+}
+.not-active-circle {
+    color: red;
+}
+.pageTitle{
+    text-align: center;
+}
+
+a{
+    color: black;
+}
+
+
