@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" id="tUser">
     <div class="row flex-lg-nowrap">
         <div class="col">
             <div class="row flex-lg-nowrap">
@@ -34,7 +34,9 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <?php foreach ($users as $user) : ?>
+                                        <?php foreach ($users
+
+                                                       as $user) : ?>
                                             <?php if (isset($user)): ?>
                                                 <tr>
                                                     <td class="align-middle">
@@ -49,8 +51,9 @@
                                                     <td class="text-nowrap align-middle">
                                                         <span><?= $user['role'] ?></span></td>
                                                     <td class="text-center align-middle"><i
-                                                                class="fa fa-circle active-circle"></i><?= $user['status'] ?>
+                                                                class="fa fa-circle active-circle"></i><?= $user['id'] ?>
                                                     </td>
+
                                                     <td class="text-center align-middle">
                                                         <div class="btn-group align-top">
                                                             <button class="btn btn-sm btn-outline-secondary badge"
@@ -58,9 +61,9 @@
                                                                     data-toggle="modal"
                                                                     data-target="#user-form-modal">Edit
                                                             </button>
-                                                            <button class="btn btn-sm btn-outline-secondary badge"
-                                                                    type="button"><i
-                                                                        class="fa fa-trash"></i></button>
+                                                            <button class="btn btn-sm btn-outline-secondary badge fa fa-trash delete"
+                                                                    type="button" value="<?= $user['id'] ?>">
+                                                            </button>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -69,10 +72,12 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div id="inner"></div>
 
-                                <div class="d-flex justify-content-evenly">
+                                <div class=" d-flex justify-content-evenly">
                                     <button type="button" class="btn btn-primary">Add</button>
-                                    <select class="form-select w-25" aria-label="Default select example">
+                                    <select class="form-select w-25"
+                                            aria-label="Default select example">
                                         <option selected>Please Select</option>
                                         <option value="1">Set active</option>
                                         <option value="2">Set not active</option>
@@ -84,6 +89,7 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- User Form Modal -->
                 <div class="modal fade" id="user-form-modal" tabindex="-1" aria-labelledby="user-form-modal"
                      aria-hidden="true">
@@ -128,6 +134,17 @@
                 </div>
             </div>
         </div>
-<script>
-    
-</script>
+        <script>
+            $(document).on('click', '.delete', function () {
+                    let id = $(this).val()
+                    $.ajax({
+                        url: '/users/delete',
+                        method: "GET",
+                        data: {id: id},
+                        success: function (data) {
+                            document.body.outerHTML = data
+                        }
+                    })
+                }
+            )
+        </script>

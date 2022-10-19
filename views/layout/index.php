@@ -8,6 +8,9 @@ $user = $UserModel->GetCurrentUser();
     <title><?= $MainTitle ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+            crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="icon" type="image/png" href="https://c.cksource.com/a/1/logos/ckeditor5.png">
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -54,7 +57,7 @@ $user = $UserModel->GetCurrentUser();
     </div>
 </nav>
 <div class="container">
-    <h1 class="mt-5 pageTitle" ><?= $PageTitle ?></h1>
+    <h1 class="mt-5 pageTitle"><?= $PageTitle ?></h1>
     <? if (!empty($MessageText)): ?>
         <div class="alert alert-<?= $MessageClass ?>" role="alert">
             <?= $MessageText ?>

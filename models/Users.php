@@ -7,11 +7,17 @@ use core\Utils;
 
 class Users extends Model
 {
+
+    public function DeleteUser($id)
+    {
+        \core\Core::getInstance()->getDB()->delete('table_users', ['id' => $id]);
+    }
+
     public function GetAllUsers()
     {
         $users = \core\Core::getInstance()->getDB()->select('table_users', '*');
         if (!empty($users))
-            return  $users;
+            return $users;
         else
             return null;
     }

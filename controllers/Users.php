@@ -13,7 +13,21 @@ class Users extends Controller
         $this->usersModel = new \models\Users();
     }
 
-    public function actionIndex()
+    public function actionDelete()
+    {
+        $params = [
+            'PageTitle' => 'UsersTable',
+            'MainTitle' => 'UsersTable',
+        ];
+        $id = $_GET['id'];
+        $this->usersModel->DeleteUser($id);
+        $users = $this->usersModel->GetAllUsers();
+        return $this->render('index', ['users' => $users], $params);
+    }
+
+
+    public
+    function actionIndex()
     {
         $users = $this->usersModel->GetAllUsers();
         $params = [
@@ -21,10 +35,10 @@ class Users extends Controller
             'MainTitle' => 'UsersTable',
         ];
         return $this->render('index', ['users' => $users], $params);
-
     }
 
-    public function actionUpdate()
+    public
+    function actionUpdate()
     {
         $params = [
             'PageTitle' => 'UsersTable',
@@ -34,7 +48,8 @@ class Users extends Controller
 
     }
 
-    public function actionLogout()
+    public
+    function actionLogout()
     {
         $title = 'Вихід з сайту';
         unset($_SESSION['user']);
@@ -43,7 +58,8 @@ class Users extends Controller
             'MainTitle' => $title,]);
     }
 
-    public function actionLogin()
+    public
+    function actionLogin()
     {
         $title = 'Вхід на сайт';
         if (isset($_SESSION['user']))
@@ -72,7 +88,8 @@ class Users extends Controller
         }
     }
 
-    public function actionRegister()
+    public
+    function actionRegister()
     {
         if (isset($_SESSION['user']))
             return $this->renderMessage('ok', 'Ви вже маєте аккаунт', null);
