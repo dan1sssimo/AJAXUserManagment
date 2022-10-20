@@ -13,7 +13,30 @@ class Users extends Controller
         $this->usersModel = new \models\Users();
     }
 
-    public function actionDelete()
+    public function actionAdd()
+    {
+        $params = [
+            'PageTitle' => 'UsersTable',
+            'MainTitle' => 'UsersTable',
+        ];
+        $this->usersModel->AddUser($_POST);
+        $users = $this->usersModel->GetAllUsers();
+        return $this->render('index', ['users' => $users], $params);
+    }
+
+    public function actionEdit()
+    {
+        $params = [
+            'PageTitle' => 'UsersTable',
+            'MainTitle' => 'UsersTable',
+        ];
+        $this->usersModel->UpdateUser($_POST);
+        $users = $this->usersModel->GetAllUsers();
+        return $this->render('index', ['users' => $users], $params);
+    }
+
+    public
+    function actionDelete()
     {
         $params = [
             'PageTitle' => 'UsersTable',

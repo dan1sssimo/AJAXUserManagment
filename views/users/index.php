@@ -7,7 +7,10 @@
                         <div class="card-body">
                             <div class="e-table">
                                 <div class="d-flex justify-content-evenly">
-                                    <button type="button" class="btn btn-primary">Add</button>
+                                    <button type="button" class="btn btn-primary"
+                                            data-toggle="modal"
+                                            data-target="#user-form-modal" id="addUser">Add
+                                    </button>
                                     <select class="form-select w-25" aria-label="Default select example">
                                         <option selected>Please Select</option>
                                         <option value="1">Set active</option>
@@ -43,11 +46,12 @@
                                                         <div
                                                                 class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
                                                             <input type="checkbox" class="custom-control-input"
-                                                                   id="item-1">
-                                                            <label class="custom-control-label" for="item-1"></label>
+                                                                   id="<?= $user['id'] ?>">
+                                                            <label class="custom-control-label"
+                                                                   for="<?= $user['id'] ?>"></label>
                                                         </div>
                                                     </td>
-                                                    <td class="text-nowrap align-middle"><?= $user['first_name'] . ' ' . $user['last_name'] ?></td>
+                                                    <td class="text-nowrap align-middle userName"><?= $user['firstname'] . ' ' . $user['lastname'] ?></td>
                                                     <td class="text-nowrap align-middle">
                                                         <span><?= $user['role'] ?></span></td>
                                                     <td class="text-center align-middle"><i
@@ -56,10 +60,11 @@
 
                                                     <td class="text-center align-middle">
                                                         <div class="btn-group align-top">
-                                                            <button class="btn btn-sm btn-outline-secondary badge"
+                                                            <button class="btn btn-sm btn-outline-secondary badge edit"
                                                                     type="button"
                                                                     data-toggle="modal"
-                                                                    data-target="#user-form-modal">Edit
+                                                                    data-target="#user-form-modal"
+                                                                    value="<?= $user['id'] ?>">Edit
                                                             </button>
                                                             <button class="btn btn-sm btn-outline-secondary badge fa fa-trash delete"
                                                                     type="button" value="<?= $user['id'] ?>">
@@ -89,7 +94,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- User Form Modal -->
                 <div class="modal fade" id="user-form-modal" tabindex="-1" aria-labelledby="user-form-modal"
                      aria-hidden="true">
@@ -102,32 +106,38 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form>
+                                <form method="post">
                                     <div class="form-group">
-                                        <label for="first-name" class="col-form-label">First Name:</label>
-                                        <input type="text" class="form-control" id="first-name">
+                                        <label for="firstname" class="col-form-label">First Name:</label>
+                                        <input type="text" class="form-control" id="firstname"
+                                               name="firstname" >
                                     </div>
                                     <div class="form-group">
-                                        <label for="last-name" class="col-form-label">Last Name:</label>
-                                        <input type="text" class="form-control" id="last-name">
+                                        <label for="lastname" class="col-form-label">Last Name:</label>
+                                        <input type="text" class="form-control" id="lastname"
+                                               name="lastname" >
                                     </div>
                                     <div class="form-group">
-                                        <label for="Status" class="col-form-label">Status</label>
-                                        <input type="text" class="form-control" id="Status">
+                                        <label for="status" class="col-form-label">Status</label>
+                                        <input type="text" class="form-control" id="status"
+                                               name="status" >
                                     </div>
                                     <div class="form-group">
-                                        <label for="Status" class="col-form-label">Role</label>
-                                        <select class="form-select" aria-label="Default select example">
+                                        <label for="role" class="col-form-label">Role</label>
+                                        <select class="form-select" aria-label="Default select example"
+                                                id="role"
+                                                name="role" >
                                             <option selected>Select role</option>
-                                            <option value="1">User</option>
-                                            <option value="2">Admin</option>
+                                            <option>User</option>
+                                            <option>Admin</option>
                                         </select>
                                     </div>
                                 </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save</button>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" id="submit">Save</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -147,4 +157,47 @@
                     })
                 }
             )
+            $(document).on('click', '.edit', function () {
+                    let id = $(this).val()
+/*                    let users = document.querySelectorAll('.userName')
+                    users.forEach(element => $('#firstname').val(element.innerHTML))*/
+                    $(document).off('click', '#submit')
+                    $(document).on('click', '#submit', function () {
+                        let firstname = $('#firstname').val()
+                        let lastname = $('#lastname').val()
+                        let status = $('#status').val()
+                        let role = $('#role').val()
+                        $.ajax({
+                            url: '/users/edit',
+                            method: "POST",
+                            data: {id: id, firstname: firstname, lastname: lastname, status: status, role: role},
+                            success: function (data) {
+                                document.body.outerHTML = data
+                            }
+                        })
+                    })
+                }
+            )
+
+            $(document).on('click', '#addUser', function () {
+                $('#firstname').val('')
+                $('#lastname').val('')
+                $('#status').val('')
+                $(document).off('click', '#submit')
+                $(document).on('click', '#submit', function () {
+                        let firstname = $('#firstname').val()
+                        let lastname = $('#lastname').val()
+                        let status = $('#status').val()
+                        let role = $('#role').val()
+                        $.ajax({
+                            url: '/users/add',
+                            method: "POST",
+                            data: {firstname: firstname, lastname: lastname, status: status, role: role},
+                            success: function (data) {
+                                document.body.outerHTML = data
+                            }
+                        })
+                    }
+                )
+            })
         </script>
