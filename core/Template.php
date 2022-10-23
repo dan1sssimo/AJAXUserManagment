@@ -41,4 +41,5 @@ class Template
     {
         echo $this->render($path);
     }
+
 }

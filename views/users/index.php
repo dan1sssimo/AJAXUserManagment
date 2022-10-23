@@ -31,7 +31,7 @@
                                                 <div
                                                         class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0">
                                                     <input type="checkbox" class="custom-control-input" id="allItems"
-                                                           name="allItems">
+                                                           name="allItems" data-id="users">
                                                     <label class="custom-control-label" for="allItems"></label>
                                                 </div>
                                             </th>
@@ -49,7 +49,7 @@
                                                         <div
                                                                 class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
                                                             <input type="checkbox" class="custom-control-input items"
-                                                                   id="<?= $user['id'] ?>">
+                                                                   id="<?= $user['id'] ?>" data-id="users">
                                                             <label class="custom-control-label"
                                                                    for="<?= $user['id'] ?>"></label>
                                                         </div>
