@@ -21,7 +21,7 @@
                                         <option value="2">Set not active</option>
                                         <option value="3">Delete</option>
                                     </select>
-                                    <button type="button" class="btn btn-success groupTask">OK</button>
+                                    <button type="button" class="btn btn-success groupTaskTop">OK</button>
                                 </div>
                                 <div class="table-responsive table-lg mt-3">
                                     <table class="table table-bordered">
@@ -63,7 +63,7 @@
                                                                     class="fa fa-circle active-circle userStatus"></i>
                                                         <?php else: ?>
                                                             <i
-                                                                    class="fa fa-circle not-active-circle userStatus"></i>
+                                                                    class="fa fa-circle circle greyCircle userStatus"></i>
                                                         <?php endif ?>
                                                     </td>
 
@@ -93,14 +93,14 @@
                                             data-toggle="modal"
                                             data-target="#user-form-modal" id="addUser">Add
                                     </button>
-                                    <select class="form-select w-25 task" aria-label="Default select example"
-                                            name="task">
+                                    <select class="form-select w-25 task2" aria-label="Default select example"
+                                            name="task2">
                                         <option selected value="0">Please Select</option>
                                         <option value="1">Set active</option>
                                         <option value="2">Set not active</option>
                                         <option value="3">Delete</option>
                                     </select>
-                                    <button type="button" class="btn btn-success groupTask">OK</button>
+                                    <button type="button" class="btn btn-success groupTaskBottom">OK</button>
                                 </div>
                             </div>
                         </div>

@@ -1,15 +1,14 @@
-<div class="modal fade" id="user-form-modal" tabindex="-1" aria-labelledby="user-form-modal"
-     aria-hidden="true">
+<div class="modal fade" id="user-form-modal" tabindex="-1" aria-labelledby="user-form-modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="UserModalLabel">AddUser/EditUser</h5>
+                <h5 class="modal-title" id="UserModalLabel">Add user</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post">
+                <form method="post" id="modalForm">
                     <div class="form-group">
                         <label for="firstname" class="col-form-label">First Name:</label>
                         <input type="text" class="form-control" id="firstname"
@@ -41,11 +40,11 @@
                         </select>
                     </div>
                 </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
-                    </button>
-                    <button type="submit" class="btn btn-primary" id="submit">Save</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                </button>
+                <button type="submit" class="btn btn-primary" id="submit">Save</button>
             </div>
         </div>
     </div>

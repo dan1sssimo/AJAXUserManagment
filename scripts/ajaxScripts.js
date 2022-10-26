@@ -1,5 +1,4 @@
-$(document).on('click', '.groupTask', function () {
-    let task = $('.task').val()
+function groupTask(task) {
     let arr = $('input:checked').map(function (i, el) {
         if ($(el).prop('id') !== 'allItems')
             return $(el).prop('id');
@@ -12,8 +11,15 @@ $(document).on('click', '.groupTask', function () {
             document.body.outerHTML = data
         }
     })
+}
+
+$(document).on('click', '.groupTaskTop', function () {
+    groupTask($('.task').val())
 })
 
+$(document).on('click', '.groupTaskBottom', function () {
+    groupTask($('.task2').val())
+})
 
 $(document).on('click', '.delete', function () {
         let id = $(this).val()
@@ -43,6 +49,7 @@ $(document).on('click', '.edit', function () {
         $('#firstname').val(fullName[0])
         $('#lastname').val(fullName[1])
         $('#role').val(role)
+        $('#UserModalLabel').text('EditUser')
         $(document).off('click', '#submit')
         $(document).on('click', '#submit', function () {
             let firstname = $('#firstname').val()
@@ -66,6 +73,7 @@ $(document).on('click', '#addUser', function () {
     $('#lastname').val('')
     $('#status').prop('checked', false)
     $('#role').val('Select role')
+    $('#UserModalLabel').text('AddUser')
     $(document).off('click', '#submit')
     $(document).on('click', '#submit', function () {
             let firstname = $('#firstname').val()
