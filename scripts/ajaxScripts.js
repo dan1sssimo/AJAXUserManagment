@@ -85,6 +85,7 @@ $(document).on('click', '#addUser', function () {
                 method: "POST",
                 data: {firstname: firstname, lastname: lastname, status: status, role: role},
                 success: function (data) {
+                    console.log(data)
                     document.body.outerHTML = data
                 }
             })
