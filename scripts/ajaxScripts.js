@@ -99,6 +99,7 @@ document.onreadystatechange = function () {
                             } else if (data.error === false) {
                                 console.log(data)
                                 fetchUser();
+                                document.getElementById("closeForm").click();
                                 $(document).off('click', '#submit')
                             }
                         }
@@ -144,6 +145,8 @@ document.onreadystatechange = function () {
             )
         })
 
+
     }
+
 }
 
