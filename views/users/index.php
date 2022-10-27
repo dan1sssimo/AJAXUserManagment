@@ -41,50 +41,8 @@
                                             <th>Actions</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        <?php if (!empty($users)) : ?>
-                                            <?php foreach ($users as $user) : ?>
-                                                <tr>
-                                                    <td class="align-middle">
-                                                        <div
-                                                                class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
-                                                            <input type="checkbox" class="custom-control-input items"
-                                                                   id="<?= $user['id'] ?>" data-id="users">
-                                                            <label class="custom-control-label"
-                                                                   for="<?= $user['id'] ?>"></label>
-                                                        </div>
-                                                    </td>
-                                                    <td class="text-nowrap align-middle userName"><?= $user['firstname'] . ' ' . $user['lastname'] ?></td>
-                                                    <td class="text-nowrap align-middle userRole">
-                                                        <span><?= $user['role'] ?></span></td>
-                                                    <td class="text-center align-middle">
-                                                        <?php if ($user['status'] == 1) : ?>
-                                                            <i
-                                                                    class="fa fa-circle active-circle userStatus"></i>
-                                                        <?php else: ?>
-                                                            <i
-                                                                    class="fa fa-circle circle greyCircle userStatus"></i>
-                                                        <?php endif ?>
-                                                    </td>
+                                        <tbody id="usersList">
 
-                                                    <td class="text-center align-middle">
-                                                        <div class="btn-group align-top">
-                                                            <button class="btn btn-sm btn-outline-secondary badge edit"
-                                                                    type="button"
-                                                                    data-toggle="modal"
-                                                                    data-target="#user-form-modal"
-                                                                    value="<?= $user['id'] ?>">Edit
-                                                            </button>
-                                                            <button class="btn btn-sm btn-outline-secondary badge fa fa-trash delete"
-                                                                    type="button" value="<?= $user['id'] ?>"
-                                                                    data-toggle="modal"
-                                                                    data-target="#user-confirm">
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        <?php endif; ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -106,13 +64,13 @@
                         </div>
                     </div>
                 </div>
-                <!-- UserFormModal -->
-                <?php include_once 'views/users/userFormModal.php' ?>
-                <!-- EndUserFormModal -->
-                <!-- ConfirmWindow -->
-                <?php include_once 'views/users/confirmForm.php' ?>
-                <!-- EndConfirmWindow -->
             </div>
         </div>
     </div>
 </div>
+<!-- UserFormModal -->
+<?php include_once 'views/users/userFormModal.php' ?>
+<!-- EndUserFormModal -->
+<!-- ConfirmWindow -->
+<?php include_once 'views/users/confirmForm.php' ?>
+<!-- EndConfirmWindow -->

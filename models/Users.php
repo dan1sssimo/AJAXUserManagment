@@ -14,52 +14,57 @@ class Users extends Model
         $user = $this->GetUserById($id);
         if (empty($user)) {
             Core::getInstance()->getDB()->delete('table_users', ['id' => $id]);
-            return [
+            $response = [
                 'error' => false
             ];
         } else
-            return [
+            $response = [
                 'error' => true,
                 'messages' => 'Такого користувача не існує'
             ];
+        echo json_encode($response);
+        die();
     }
 
     public function GroupTask($userRow)
     {
         $validateResult = $this->ValidateTask($userRow);
         if (is_array($validateResult)) {
-            return [
+            $response = [
                 'error' => true,
                 'messages' => $validateResult
             ];
+        } else {
+            $task = $userRow['task'];
+            unset($userRow['task']);
+            switch ($task) {
+                case 1:
+                {
+                    foreach ($userRow['arr'] as $value) {
+                        Core::getInstance()->getDB()->update('table_users', ['status' => '1'], ['id' => $value]);
+                    }
+                    break;
+                }
+                case 2:
+                {
+                    foreach ($userRow['arr'] as $value) {
+                        Core::getInstance()->getDB()->update('table_users', ['status' => '0'], ['id' => $value]);
+                    }
+                    break;
+                }
+                case 3:
+                {
+                    foreach ($userRow['arr'] as $value) {
+                        Core::getInstance()->getDB()->delete('table_users', ['id' => $value]);
+                    }
+                }
+            }
+            $response = [
+                'error' => false
+            ];
         }
-        $task = $userRow['task'];
-        unset($userRow['task']);
-        switch ($task) {
-            case 1:
-            {
-                foreach ($userRow['arr'] as $value) {
-                    Core::getInstance()->getDB()->update('table_users', ['status' => '1'], ['id' => $value]);
-                }
-                break;
-            }
-            case 2:
-            {
-                foreach ($userRow['arr'] as $value) {
-                    Core::getInstance()->getDB()->update('table_users', ['status' => '0'], ['id' => $value]);
-                }
-                break;
-            }
-            case 3:
-            {
-                foreach ($userRow['arr'] as $value) {
-                    Core::getInstance()->getDB()->delete('table_users', ['id' => $value]);
-                }
-            }
-        }
-        return [
-            'error' => false
-        ];
+        echo json_encode($response);
+        die();
     }
 
     public function ValidateTask($userRow)
@@ -75,32 +80,80 @@ class Users extends Model
             return true;
     }
 
-    public function GetAllUsers()
+    public function GetUserList()
     {
-        $users = Core::getInstance()->getDB()->select('table_users', '*');
-        if (!empty($users))
-            return $users;
-        else
-            return null;
+        if (isset($_POST["action"])) {
+            if ($_POST["action"] == "Load") {
+                $statement = Core::getInstance()->getDB()->select('table_users', '*');
+                $output = '';
+                if (!empty($statement)) {
+                    foreach ($statement as $row) {
+                        $output .= sprintf("
+                                               <tr>
+                                                    <td class=\"align-middle\">
+                                                        <div
+                                                                class=\"custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top\">
+                                                            <input type=\"checkbox\" class=\"custom-control-input items\"
+                                                                  data-id=\"users\" id=\"%s\">
+                                                            <label class=\"custom-control-label\" for=\"%s\"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td class=\"text-nowrap align-middle userName\"> %s %s</td>
+                                                    <td class=\"text-nowrap align-middle userRole\">
+                                                        <span>%s</span>
+                                                        </td>     
+                                                    <td class=\"text-center align-middle\">
+                                                            %s
+                                                    </td>
+                                                    <td class=\"text-center align-middle\">
+                                                        <div class=\"btn-group align-top\">
+                                                            <button class=\"btn btn-sm btn-outline-secondary badge edit\"
+                                                                    type=\"button\"
+                                                                    data-toggle=\"modal\"
+                                                                    data-target=\"#user-form-modal\"
+                                                                    value=\"%s\">Edit
+                                                            </button>
+                                                            <button class=\"btn btn-sm btn-outline-secondary badge fa fa-trash delete\"
+                                                                    type=\"button\" value=\"%s\"
+                                                                 >
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                        ", $row['id'], $row['id'], $row['firstname'], $row['lastname'], $row['role'], $row['status'] == 1 ? '<i class="fa fa-circle active-circle userStatus"></i>' : '<i class="fa fa-circle circle greyCircle userStatus"></i>', $row['id'], $row['id']);
+                    }
+                } else {
+                    $output .= '
+                     <tr>
+                         <td>No Users</td>
+                     </tr>
+                    ';
+                }
+                echo $output;
+            }
+        }
     }
 
     public function UpdateUser($userRow)
     {
         $validateResult = $this->ValidateEdit($userRow);
         if (is_array($validateResult)) {
-            return [
+            $response = [
                 'error' => true,
                 'messages' => $validateResult
             ];
+        } else {
+            $id = $userRow['id'];
+            unset($userRow['id']);
+            $fields = ['firstname', 'lastname', 'status', 'role'];
+            $RowFiltered = Utils::ArrayFilter($userRow, $fields);
+            Core::getInstance()->getDB()->update('table_users', $RowFiltered, ['id' => $id]);
+            $response = [
+                'error' => false,
+            ];
         }
-        $id = $userRow['id'];
-        unset($userRow['id']);
-        $fields = ['firstname', 'lastname', 'status', 'role'];
-        $RowFiltered = Utils::ArrayFilter($userRow, $fields);
-        Core::getInstance()->getDB()->update('table_users', $RowFiltered, ['id' => $id]);
-        return [
-            'error' => false,
-        ];
+        echo json_encode($response);
+        die();
     }
 
     public function GetUserById($id)
@@ -149,17 +202,20 @@ class Users extends Model
     {
         $validateResult = $this->Validate($userRow);
         if (is_array($validateResult)) {
-            return [
+            $response = [
                 'error' => true,
                 'messages' => $validateResult
             ];
+        } else {
+            $fields = ['firstname', 'lastname', 'status', 'role'];
+            $userRowFiltered = Utils::ArrayFilter($userRow, $fields);
+            Core::getInstance()->getDB()->insert('table_users', $userRowFiltered);
+            $response = [
+                'error' => false,
+            ];
         }
-        $fields = ['firstname', 'lastname', 'status', 'role'];
-        $userRowFiltered = Utils::ArrayFilter($userRow, $fields);
-        Core::getInstance()->getDB()->insert('table_users', $userRowFiltered);
-        return [
-            'error' => false,
-        ];
+        echo json_encode($response);
+        die();
     }
 
     public function GetUserByName($firstName, $lastName)

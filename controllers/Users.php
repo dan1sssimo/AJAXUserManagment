@@ -18,75 +18,33 @@ class Users extends Controller
 
     public function actionAdd()
     {
-
-        $result = $this->usersModel->AddUser($_POST);
-        $users = $this->usersModel->GetAllUsers();
-        if ($result['error'] === false) {
-            return $this->render('index', ['users' => $users], $this->params);
-        } else {
-            $message = implode('<br/>', $result['messages']);
-            return $this->render('index', ['model' => $_POST, 'users' => $users], [
-                $this->params,
-                'MessageText' => $message,
-                'MessageClass' => 'danger'
-            ]);
-        }
+        $this->usersModel->AddUser($_POST);
     }
 
     public function actionTask()
     {
-        $result = $this->usersModel->GroupTask($_POST);
-        $users = $this->usersModel->GetAllUsers();
-        if ($result['error'] === false) {
-            return $this->render('index', ['users' => $users], $this->params);
-        } else {
-            $message = implode('<br/>', $result['messages']);
-            return $this->render('index', ['model' => $_POST, 'users' => $users], [
-                $this->params,
-                'MessageText' => $message,
-                'MessageClass' => 'danger'
-            ]);
-        }
+        $this->usersModel->GroupTask($_POST);
     }
 
     public function actionEdit()
     {
-        $result = $this->usersModel->UpdateUser($_POST);
-        $users = $this->usersModel->GetAllUsers();
-        if ($result['error'] === false) {
-            return $this->render('index', ['users' => $users], $this->params);
-        } else {
-            $message = implode('<br/>', $result['messages']);
-            return $this->render('index', ['model' => $_POST, 'users' => $users], [
-                $this->params,
-                'MessageText' => $message,
-                'MessageClass' => 'danger'
-            ]);
-        }
+        $this->usersModel->UpdateUser($_POST);
     }
 
     public function actionDelete()
     {
         $id = $_POST['id'];
-        $result = $this->usersModel->DeleteUser($id);
-        $users = $this->usersModel->GetAllUsers();
-        if ($result['error'] === false) {
-            return $this->render('index', ['users' => $users], $this->params);
-        } else {
-            $message = implode('<br/>', $result['messages']);
-            return $this->render('index', ['model' => $_POST, 'users' => $users], [
-                $this->params,
-                'MessageText' => $message,
-                'MessageClass' => 'danger'
-            ]);
-        }
+        $this->usersModel->DeleteUser($id);
     }
-
 
     public function actionIndex()
     {
-        $users = $this->usersModel->GetAllUsers();
-        return $this->render('index', ['users' => $users], $this->params);
+        return $this->render('index', null, $this->params);
+    }
+
+    public function actionList()
+    {
+        $this->usersModel->GetUserList();
     }
 
 }

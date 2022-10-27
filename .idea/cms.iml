@@ -6,5 +6,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jquery-validate" level="application" />
     <orderEntry type="library" name="jquery.validate" level="application" />
+    <orderEntry type="library" name="jquery-latest" level="application" />
   </component>
 </module>
