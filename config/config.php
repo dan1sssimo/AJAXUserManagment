@@ -6,5 +6,4 @@ $Config = [
         'Password' => '',
         'Database' => 'cms'
     ],
-
 ];

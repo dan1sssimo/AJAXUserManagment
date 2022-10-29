@@ -33,8 +33,7 @@ class Users extends Controller
 
     public function actionDelete()
     {
-        $id = $_POST['id'];
-        $this->usersModel->DeleteUser($id);
+        $this->usersModel->DeleteUser($_POST);
     }
 
     public function actionIndex()

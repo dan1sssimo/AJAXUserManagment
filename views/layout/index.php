@@ -31,7 +31,7 @@
     </div>
 </nav>
 <div class="container">
-    <h1 class="mt-5 pageTitle"></h1>
+    <div class="mt-5 pageTitle"></div>
     <?php if (!empty($MessageText)): ?>
         <div class="alert alert-<?= $MessageClass ?>" role="alert">
             <?= $MessageText ?>
