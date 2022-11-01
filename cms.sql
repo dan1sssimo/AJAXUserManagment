@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 27 2022 г., 22:41
+-- Время создания: Ноя 01 2022 г., 18:16
 -- Версия сервера: 5.7.33
 -- Версия PHP: 7.2.34
 
@@ -40,10 +40,14 @@ CREATE TABLE `table_users` (
 --
 
 INSERT INTO `table_users` (`id`, `firstname`, `lastname`, `status`, `role`) VALUES
-(5, 'dsa', 'dsadsa', 0, 'Admin'),
-(6, 'dsad', 'sadas', 0, 'User'),
-(7, 'dsadsa', '321321', 1, 'User'),
-(8, '321', '321321', 0, 'User');
+(241, '1', '1', 1, '2'),
+(242, '2', '2', 0, '2'),
+(243, '3', '3', 0, '2'),
+(244, '1dsadsa', '1sda', 0, '1'),
+(245, '1321321', '23132', 0, '1'),
+(246, '321', '321', 1, '1'),
+(247, '213', '21321', 0, '1'),
+(248, '321321', '321', 1, '1');
 
 --
 -- Индексы сохранённых таблиц
@@ -63,7 +67,7 @@ ALTER TABLE `table_users`
 -- AUTO_INCREMENT для таблицы `table_users`
 --
 ALTER TABLE `table_users`
-  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=249;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
