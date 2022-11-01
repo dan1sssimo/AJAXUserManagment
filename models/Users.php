@@ -8,6 +8,7 @@ use core\Utils;
 
 class Users extends Model
 {
+    public $role = ['User' => 1, 'Admin' => 2];
 
     public function DeleteUser($userRow)
     {
@@ -121,6 +122,8 @@ class Users extends Model
                 'error' => ['code' => 100, 'message' => $validateResult]
             ];
         } else {
+            $textRole = $userRow['role'];
+            $userRow['role'] = $this->role[$userRow['role']];
             $id = $userRow['id'];
             unset($userRow['id']);
             $fields = ['firstname', 'lastname', 'status', 'role'];
@@ -133,7 +136,7 @@ class Users extends Model
                     'firstname' => $RowFiltered['firstname'],
                     'lastname' => $RowFiltered['lastname'],
                     'status' => $RowFiltered['status'],
-                    'role' => $RowFiltered['role']
+                    'role' => $textRole
                 ]
             ];
         }
@@ -196,6 +199,8 @@ class Users extends Model
                 'error' => ['code' => 100, 'message' => $validateResult],
             ];
         } else {
+            $textRole = $userRow['role'];
+            $userRow['role'] = $this->role[$userRow['role']];
             $fields = ['firstname', 'lastname', 'status', 'role'];
             $userRowFiltered = Utils::ArrayFilter($userRow, $fields);
             $id = Core::getInstance()->getDB()->insert('table_users', $userRowFiltered);
@@ -206,7 +211,7 @@ class Users extends Model
                     'firstname' => $userRowFiltered['firstname'],
                     'lastname' => $userRowFiltered['lastname'],
                     'status' => $userRowFiltered['status'],
-                    'role' => $userRowFiltered['role']
+                    'role' => $textRole
                 ]];
         }
         echo json_encode($response);

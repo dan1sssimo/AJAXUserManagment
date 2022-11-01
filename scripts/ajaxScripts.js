@@ -39,7 +39,7 @@ document.onreadystatechange = function () {
                                                         </td>
                                                         <td class="text-nowrap align-middle userName">${element.firstname} ${element.lastname}</td>
                                                         <td class="text-nowrap align-middle userRole">
-                                                            <span>${element.role}</span>
+                                                            <span>${element.role === '1' ? 'User' : 'Admin'}</span>
                                                         </td>
                                                         <td class="text-center align-middle">
                                                               ${element.status === '1' ?
@@ -79,7 +79,6 @@ document.onreadystatechange = function () {
                 dataType: 'json',
                 data: {task: task, arr: arr},
                 success: function (data) {
-                    console.log(data)
                     if (data.status === true && data.error == null) {
                         switch (task) {
                             case "1" : {
@@ -143,6 +142,7 @@ document.onreadystatechange = function () {
                                 $('#confirmForm').append(`<div class="alert alert-danger" role="alert">${data.error.message}</div>`);
                             }
                         }
+
                     })
                 }
             )
