@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="confirmForm">
                 <form method="post">
                     <div class="modal-body">
                         <label for="userNameDelete">You want to delete this user?</label>

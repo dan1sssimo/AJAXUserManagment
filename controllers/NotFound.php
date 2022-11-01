@@ -15,5 +15,4 @@ class NotFound extends Controller
             'MainTitle' => $title,
             'PageTitle' => $title
         ]);
-    }
-}
+    }}

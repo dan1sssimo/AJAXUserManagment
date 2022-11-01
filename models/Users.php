@@ -11,14 +11,13 @@ class Users extends Model
 
     public function DeleteUser($userRow)
     {
-        $id = $userRow['id'];
-        $user = $this->GetUserById($id);
-        if (empty($user)) {
-            Core::getInstance()->getDB()->delete('table_users', ['id' => $id]);
+        $user = $this->GetUserById($userRow['id']);
+        if (!empty($user)) {
+            Core::getInstance()->getDB()->delete('table_users', ['id' => $userRow['id']]);
             $response = [
                 'status' => true,
                 'error' => null,
-                'user' => ['id' => $id]
+                'user' => ['id' => $userRow['id']]
             ];
         } else
             $response = [
@@ -65,7 +64,7 @@ class Users extends Model
             $response = [
                 'status' => true,
                 'error' => null,
-                'user' => [$userRow, 'task' => $task]
+                'user' => $userRow['arr']
             ];
         }
         echo json_encode($response);
@@ -74,11 +73,23 @@ class Users extends Model
 
     public function ValidateTask($userRow)
     {
+        $count = 0;
         $errors = [];
         if (empty($userRow['arr']))
             $errors[] = 'Не вибрано жодного користувача';
         if ($userRow['task'] == '0')
             $errors[] = 'Не вибрана групова дія';
+        if ($userRow['arr']) {
+            foreach ($userRow['arr'] as $value) {
+                $user = $this->GetUserById($value);
+                if (empty($user)) {
+                    $count += 1;
+                }
+            }
+        }
+        if ($count != 0) {
+            $errors[] = "Помилка операції, вибрано $count не існуючих юзерів.";
+        }
         if (count($errors) > 0)
             return $errors;
         else
@@ -93,7 +104,7 @@ class Users extends Model
                 $response = [
                     'status' => true,
                     'error' => null,
-                    'users' => $statement
+                    'user' => $statement
                 ];
                 echo json_encode($response);
                 die();
@@ -118,7 +129,12 @@ class Users extends Model
             $response = [
                 'status' => true,
                 'error' => null,
-                'user' => ['id' => $id, $RowFiltered]
+                'user' => ['id' => $id,
+                    'firstname' => $RowFiltered['firstname'],
+                    'lastname' => $RowFiltered['lastname'],
+                    'status' => $RowFiltered['status'],
+                    'role' => $RowFiltered['role']
+                ]
             ];
         }
         echo json_encode($response);
@@ -127,8 +143,8 @@ class Users extends Model
 
     public function GetUserById($id)
     {
-        $user = Core::getInstance()->getDB()->select('users', '*', ['id' => $id]);
-        if (!empty($user))
+        $user = Core::getInstance()->getDB()->select('table_users', '*', ['id' => $id]);
+        if (count($user) > 0)
             return $user[0];
         else
             return null;
@@ -161,6 +177,10 @@ class Users extends Model
             $errors[] = 'Поле "lastname" не може бути порожнім';
         if ($formRow['role'] == 'Select role')
             $errors[] = 'Поле "role" не може бути порожнім';
+        $user = $this->GetUserById($formRow['id']);
+        if (empty($user)) {
+            $errors[] = 'Такого користувача не існує';
+        }
         if (count($errors) > 0)
             return $errors;
         else
@@ -182,8 +202,12 @@ class Users extends Model
             $response = [
                 'status' => true,
                 'error' => null,
-                'user' => ['id' => $id, $userRowFiltered]
-            ];
+                'user' => ['id' => $id,
+                    'firstname' => $userRowFiltered['firstname'],
+                    'lastname' => $userRowFiltered['lastname'],
+                    'status' => $userRowFiltered['status'],
+                    'role' => $userRowFiltered['role']
+                ]];
         }
         echo json_encode($response);
         die();

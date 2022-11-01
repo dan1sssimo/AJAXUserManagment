@@ -27,7 +27,7 @@ document.onreadystatechange = function () {
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>`);
-                    data.users.forEach(element => {
+                    data.user.forEach(element => {
                         $('#usersList').append(`<tr id="user${element.id}">
                                                         <td class="align-middle">
                                                             <div
@@ -42,7 +42,7 @@ document.onreadystatechange = function () {
                                                             <span>${element.role}</span>
                                                         </td>
                                                         <td class="text-center align-middle">
-                                                              ${element.status == 1 ?
+                                                              ${element.status === '1' ?
                             '<i class="fa fa-circle active-circle userStatus"></i>' :
                             '<i class="fa fa-circle circle greyCircle userStatus"></i>'}
                                                         </td>
@@ -79,24 +79,25 @@ document.onreadystatechange = function () {
                 dataType: 'json',
                 data: {task: task, arr: arr},
                 success: function (data) {
+                    console.log(data)
                     if (data.status === true && data.error == null) {
-                        switch (data.user.task) {
+                        switch (task) {
                             case "1" : {
-                                data.user[0].arr.forEach(element => {
+                                data.user.forEach(element => {
                                     $(`#user${element}`).find('.userStatus').removeClass('circle greyCircle')
                                     $(`#user${element}`).find('.userStatus').addClass('active-circle')
                                 })
                                 break
                             }
                             case "2" : {
-                                data.user[0].arr.forEach(element => {
+                                data.user.forEach(element => {
                                     $(`#user${element}`).find('.userStatus').addClass('circle greyCircle')
                                     $(`#user${element}`).find('.userStatus').removeClass('active-circle')
                                 })
                                 break
                             }
                             case "3": {
-                                data.user[0].arr.forEach(element => {
+                                data.user.forEach(element => {
                                     $(`#user${element}`).remove()
                                 })
                                 break
@@ -127,6 +128,7 @@ document.onreadystatechange = function () {
             $('#userNameDelete').val(fullName)
             $(document).off('click', '#confirmDel')
             $(document).on('click', '#confirmDel', function () {
+                    $('div').remove(".alert-danger")
                     $.ajax({
                         url: '/users/delete',
                         method: "POST",
@@ -138,9 +140,7 @@ document.onreadystatechange = function () {
                                 document.getElementById("closeConfirm").click();
                                 $(document).off('click', '#confirmDel')
                             } else if (data.status === false && data.error !== null) {
-                                data.error.message.forEach(element => {
-                                    $('#modalForm').append(`<div class="alert alert-danger" role="alert">${element}</div>`);
-                                })
+                                $('#confirmForm').append(`<div class="alert alert-danger" role="alert">${data.error.message}</div>`);
                             }
                         }
                     })
@@ -174,15 +174,16 @@ document.onreadystatechange = function () {
                     data: {id: id, firstname: firstname, lastname: lastname, status: status, role: role},
                     success: function (data) {
                         if (data.status === true && data.error == null) {
-                            let fullName = `${data.user[0].firstname} ${data.user[0].lastname}`
-                            $(`#user${data.user.id}`).find('.userName').text(fullName)
-                            $(`#user${data.user.id}`).find('.userRole').text(data.user[0].role)
-                            if (data.user[0].status == 1) {
-                                $(`#user${data.user.id}`).find('.userStatus').removeClass('circle greyCircle')
-                                $(`#user${data.user.id}`).find('.userStatus').addClass('active-circle')
+                            let user = $(`#user${data.user.id}`)
+                            let fullName = `${data.user.firstname} ${data.user.lastname}`
+                            user.find('.userName').text(fullName)
+                            user.find('.userRole').text(data.user.role)
+                            if (data.user.status === '1') {
+                                user.find('.userStatus').removeClass('circle greyCircle')
+                                user.find('.userStatus').addClass('active-circle')
                             } else {
-                                $(`#user${data.user.id}`).find('.userStatus').addClass('circle greyCircle')
-                                $(`#user${data.user.id}`).find('.userStatus').removeClass('active-circle')
+                                user.find('.userStatus').addClass('circle greyCircle')
+                                user.find('.userStatus').removeClass('active-circle')
                             }
                             $(document).off('click', '#submit')
                             document.getElementById("closeForm").click();
@@ -226,12 +227,12 @@ document.onreadystatechange = function () {
                                                                 <label class="custom-control-label" for="${data.user.id}"></label>
                                                             </div>
                                                         </td>
-                                                        <td class="text-nowrap align-middle userName">${data.user[0].firstname} ${data.user[0].lastname}</td>
+                                                        <td class="text-nowrap align-middle userName">${data.user.firstname} ${data.user.lastname}</td>
                                                         <td class="text-nowrap align-middle userRole">
-                                                            <span>${data.user[0].role}</span>
+                                                            <span>${data.user.role}</span>
                                                         </td>
                                                         <td class="text-center align-middle">
-                                                              ${data.user[0].status == 1 ?
+                                                              ${data.user.status === '1' ?
                                 '<i class="fa fa-circle active-circle userStatus"></i>' :
                                 '<i class="fa fa-circle circle greyCircle userStatus"></i>'}
                                                         </td>
@@ -252,6 +253,7 @@ document.onreadystatechange = function () {
                                                         </td>
                                                     </tr>`);
                             $(document).off('click', '#submit')
+                            $("#allItems").prop('checked', false)
                             document.getElementById("closeForm").click();
                         } else if (data.status === false && data.error !== null) {
                             data.error.message.forEach(element => {

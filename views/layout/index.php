@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title><?= $MainTitle ?></title>
+    <title>Users</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="/styles/style.css" rel="stylesheet">
+    <link rel="icon" href="/files/free-icon-public-6144309.png">
 </head>
 <body>
 <nav class="navbar navbar-dark bg-dark navbar-expand-lg navbar-light bg-light">
@@ -32,11 +33,6 @@
 </nav>
 <div class="container">
     <div class="mt-5 pageTitle"></div>
-    <?php if (!empty($MessageText)): ?>
-        <div class="alert alert-<?= $MessageClass ?>" role="alert">
-            <?= $MessageText ?>
-        </div>
-    <?php endif; ?>
     <?= $PageContent ?>
 </div>
 <script src="/scripts/formScripts.js"></script>

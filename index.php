@@ -5,9 +5,5 @@ include('core/DB.php');
 
 $core = \core\Core::getInstance();
 $core->init();
-try {
-    $core->run();
-} catch (Exception $e) {
-    header('Location: /notfound/');
-}
+$core->run();
 $core->done();
