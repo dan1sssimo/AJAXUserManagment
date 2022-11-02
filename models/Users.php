@@ -4,72 +4,50 @@ namespace models;
 
 use core\Core;
 use core\Model;
-use core\Utils;
 
 class Users extends Model
 {
-    public $role = ['User' => 1, 'Admin' => 2];
-
-    public function DeleteUser($userRow)
+    public function SelectAllUserFromDB()
     {
-        $user = $this->GetUserById($userRow['id']);
-        if (!empty($user)) {
-            Core::getInstance()->getDB()->delete('table_users', ['id' => $userRow['id']]);
-            $response = [
-                'status' => true,
-                'error' => null,
-                'user' => ['id' => $userRow['id']]
-            ];
-        } else
-            $response = [
-                'status' => false,
-                'error' => ['code' => 100, 'message' => 'Такого користувача не існує']
-            ];
-        echo json_encode($response);
-        die();
+        return Core::getInstance()->getDB()->select('table_users', '*');
     }
 
-    public function GroupTask($userRow)
+    public function AddUserToDB($userRow)
     {
-        $validateResult = $this->ValidateTask($userRow);
-        if (is_array($validateResult)) {
-            $response = [
-                'status' => false,
-                'error' => ['code' => 100, 'message' => $validateResult]
-            ];
-        } else {
-            $task = $userRow['task'];
-            unset($userRow['task']);
-            switch ($task) {
-                case 1:
-                {
-                    foreach ($userRow['arr'] as $value) {
-                        Core::getInstance()->getDB()->update('table_users', ['status' => '1'], ['id' => $value]);
-                    }
-                    break;
-                }
-                case 2:
-                {
-                    foreach ($userRow['arr'] as $value) {
-                        Core::getInstance()->getDB()->update('table_users', ['status' => '0'], ['id' => $value]);
-                    }
-                    break;
-                }
-                case 3:
-                {
-                    foreach ($userRow['arr'] as $value) {
-                        Core::getInstance()->getDB()->delete('table_users', ['id' => $value]);
-                    }
-                }
-            }
-            $response = [
-                'status' => true,
-                'error' => null,
-                'user' => $userRow['arr']
-            ];
+        return Core::getInstance()->getDB()->insert('table_users', $userRow);
+    }
+
+    public function DeleteUserFromDB($userRow)
+    {
+        Core::getInstance()->getDB()->delete('table_users', ['id' => $userRow['id']]);
+    }
+
+    public function UpdateUserInDB($userRow)
+    {
+        $id = $userRow['id'];
+        unset($userRow['id']);
+        Core::getInstance()->getDB()->update('table_users', $userRow, ['id' => $id]);
+    }
+
+    public function GroupTaskSetActive($userRow)
+    {
+        foreach ($userRow['arr'] as $value) {
+            Core::getInstance()->getDB()->update('table_users', ['status' => '1'], ['id' => $value]);
         }
-        echo json_encode($response);
-        die();
+    }
+
+    public function GroupTaskSetNotActive($userRow)
+    {
+        foreach ($userRow['arr'] as $value) {
+            Core::getInstance()->getDB()->update('table_users', ['status' => '0'], ['id' => $value]);
+        }
+    }
+
+    public function GroupTaskDelete($userRow)
+    {
+        foreach ($userRow['arr'] as $value) {
+            Core::getInstance()->getDB()->delete('table_users', ['id' => $value]);
+        }
     }
 
     public function ValidateTask($userRow)
@@ -95,53 +73,6 @@ class Users extends Model
             return $errors;
         else
             return true;
-    }
-
-    public function GetUserList()
-    {
-        if (isset($_POST["action"])) {
-            if ($_POST["action"] == "Load") {
-                $statement = Core::getInstance()->getDB()->select('table_users', '*');
-                $response = [
-                    'status' => true,
-                    'error' => null,
-                    'user' => $statement
-                ];
-                echo json_encode($response);
-                die();
-            }
-        }
-    }
-
-    public function UpdateUser($userRow)
-    {
-        $validateResult = $this->ValidateEdit($userRow);
-        if (is_array($validateResult)) {
-            $response = [
-                'status' => false,
-                'error' => ['code' => 100, 'message' => $validateResult]
-            ];
-        } else {
-            $textRole = $userRow['role'];
-            $userRow['role'] = $this->role[$userRow['role']];
-            $id = $userRow['id'];
-            unset($userRow['id']);
-            $fields = ['firstname', 'lastname', 'status', 'role'];
-            $RowFiltered = Utils::ArrayFilter($userRow, $fields);
-            Core::getInstance()->getDB()->update('table_users', $RowFiltered, ['id' => $id]);
-            $response = [
-                'status' => true,
-                'error' => null,
-                'user' => ['id' => $id,
-                    'firstname' => $RowFiltered['firstname'],
-                    'lastname' => $RowFiltered['lastname'],
-                    'status' => $RowFiltered['status'],
-                    'role' => $textRole
-                ]
-            ];
-        }
-        echo json_encode($response);
-        die();
     }
 
     public function GetUserById($id)
@@ -188,34 +119,6 @@ class Users extends Model
             return $errors;
         else
             return true;
-    }
-
-    public function AddUser($userRow)
-    {
-        $validateResult = $this->Validate($userRow);
-        if (is_array($validateResult)) {
-            $response = [
-                'status' => false,
-                'error' => ['code' => 100, 'message' => $validateResult],
-            ];
-        } else {
-            $textRole = $userRow['role'];
-            $userRow['role'] = $this->role[$userRow['role']];
-            $fields = ['firstname', 'lastname', 'status', 'role'];
-            $userRowFiltered = Utils::ArrayFilter($userRow, $fields);
-            $id = Core::getInstance()->getDB()->insert('table_users', $userRowFiltered);
-            $response = [
-                'status' => true,
-                'error' => null,
-                'user' => ['id' => $id,
-                    'firstname' => $userRowFiltered['firstname'],
-                    'lastname' => $userRowFiltered['lastname'],
-                    'status' => $userRowFiltered['status'],
-                    'role' => $textRole
-                ]];
-        }
-        echo json_encode($response);
-        die();
     }
 
     public function GetUserByName($firstName, $lastName)

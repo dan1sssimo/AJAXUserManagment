@@ -19,13 +19,28 @@
                                         <option selected value="0">Please Select</option>
                                         <option value="1">Set active</option>
                                         <option value="2">Set not active</option>
-                                         <option value="3">Delete</option>
+                                        <option value="3">Delete</option>
                                     </select>
                                     <button type="button" class="btn btn-success groupTaskTop">OK</button>
                                 </div>
                                 <div class="table-responsive table-lg mt-3">
                                     <table class="table table-bordered" id="usersList">
-
+                                        <thead>
+                                        <tr>
+                                            <th class="align-top">
+                                                <div
+                                                        class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0">
+                                                    <input type="checkbox" class="custom-control-input" id="allItems"
+                                                           name="allItems" data-id="users">
+                                                    <label class="custom-control-label" for="allItems"></label>
+                                                </div>
+                                            </th>
+                                            <th class="max-width">Name</th>
+                                            <th class="sortable">Role</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
                                     </table>
                                 </div>
                                 <div class="d-flex justify-content-evenly">
