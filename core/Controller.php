@@ -10,6 +10,14 @@ namespace core;
  */
 class Controller
 {
+    public function isPost()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST')
+            return true;
+        else
+            return false;
+    }
+
     public function render($viewName, $localParams = null, $globalParams = null)
     {
         $tpl = new Template();
