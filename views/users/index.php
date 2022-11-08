@@ -6,13 +6,13 @@
                     <div class="e-panel card">
                         <div class="card-body">
                             <div class="card-title">
-                                <h4 class="mr-2"><span>Users</span></h4>
+                                <h4 class="mr-2 text-right"><span>Users</span></h4>
                             </div>
                             <div class="e-table">
                                 <div class="d-flex justify-content-evenly">
                                     <button type="button" class="btn btn-primary"
                                             data-toggle="modal"
-                                            data-target="#user-form-modal" id="addUser">Add
+                                            data-target="#user-form-modal" id="addUser">Додати
                                     </button>
                                     <select class="form-select w-25 task" aria-label="Default select example"
                                             name="task">
@@ -27,18 +27,17 @@
                                     <table class="table table-bordered" id="usersList">
                                         <thead>
                                         <tr>
-                                            <th class="align-top">
-                                                <div
-                                                        class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0">
-                                                    <input type="checkbox" class="custom-control-input" id="allItems"
+                                            <th class="align-top text-center">
+                                                <div class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 ">
+                                                    <input type="checkbox" class="custom-control-input " id="allItems"
                                                            name="allItems" data-id="users">
                                                     <label class="custom-control-label" for="allItems"></label>
                                                 </div>
                                             </th>
-                                            <th class="max-width">Name</th>
-                                            <th class="sortable">Role</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
+                                            <th class="max-width text-center">Повне ім'я</th>
+                                            <th class="text-center">Роль</th>
+                                            <th class="text-center">Статус </th>
+                                            <th class="text-center">Дія</th>
                                         </tr>
                                         </thead>
                                     </table>
@@ -46,7 +45,7 @@
                                 <div class="d-flex justify-content-evenly">
                                     <button type="button" class="btn btn-primary"
                                             data-toggle="modal"
-                                            data-target="#user-form-modal" id="addUser">Add
+                                            data-target="#user-form-modal" id="addUser">Додати
                                     </button>
                                     <select class="form-select w-25 task2" aria-label="Default select example"
                                             name="task2">

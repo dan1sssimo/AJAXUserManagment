@@ -25,7 +25,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/users/">Task 3 SoftSprint</a>
+                    <a class="nav-link active" aria-current="page" href="/users/">Система керування користувачами</a>
                 </li>
             </ul>
         </div>

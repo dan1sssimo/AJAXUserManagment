@@ -9,7 +9,7 @@ function fetchUser() {
         success: function (data) {
             data.user.forEach(element => {
                 $('#usersList').append(`<tr id="user${element.id}">
-                                                        <td class="align-middle">
+                                                        <td class="align-middle text-center">
                                                             <div
                                                                     class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
                                                                 <input type="checkbox" class="custom-control-input items"
@@ -17,11 +17,11 @@ function fetchUser() {
                                                                 <label class="custom-control-label" for="${element.id}"></label>
                                                             </div>
                                                         </td>
-                                                        <td class="text-nowrap align-middle userName">${element.firstname} ${element.lastname}</td>
-                                                        <td class="text-nowrap align-middle userRole">
+                                                        <td class="text-nowrap align-middle userName text-center">${element.firstname} ${element.lastname}</td>
+                                                        <td class="text-nowrap align-middle userRole text-center">
                                                             <span>${element.role === '1' ? 'User' : 'Admin'}</span>
                                                         </td>
-                                                        <td class="text-center align-middle">
+                                                        <td class="text-center align-middle text-center">
                                                               ${element.status === '1' ?
                     '<i class="fa fa-circle active-circle userStatus"></i>' :
                     '<i class="fa fa-circle circle greyCircle userStatus"></i>'}
@@ -32,7 +32,7 @@ function fetchUser() {
                                                                         type="button"
                                                                         data-toggle="modal"
                                                                         data-target="#user-form-modal"
-                                                                        value="${element.id}">Edit
+                                                                        value="${element.id}">Редагувати
                                                                 </button>
                                                                 <button class="btn btn-sm btn-outline-secondary badge fa fa-trash delete"
                                                                         data-toggle="modal"
@@ -198,7 +198,7 @@ $(document).on('click', '#addUser', function () {
             success: function (data) {
                 if (data.status === true && data.error == null) {
                     $('#usersList').append(`<tr id="user${data.user.id}">
-                                                        <td class="align-middle">
+                                                        <td class="align-middle text-center">
                                                             <div
                                                                     class="custom-control custom-control-inline custom-checkbox custom-control-nameless m-0 align-top">
                                                                 <input type="checkbox" class="custom-control-input items"
@@ -206,11 +206,11 @@ $(document).on('click', '#addUser', function () {
                                                                 <label class="custom-control-label" for="${data.user.id}"></label>
                                                             </div>
                                                         </td>
-                                                        <td class="text-nowrap align-middle userName">${data.user.firstname} ${data.user.lastname}</td>
-                                                        <td class="text-nowrap align-middle userRole">
+                                                        <td class="text-nowrap align-middle userName text-center">${data.user.firstname} ${data.user.lastname}</td>
+                                                        <td class="text-nowrap align-middle userRole text-center">
                                                             <span>${data.user.role}</span>
                                                         </td>
-                                                        <td class="text-center align-middle">
+                                                        <td class="text-center align-middle text-center">
                                                               ${data.user.status === '1' ?
                         '<i class="fa fa-circle active-circle userStatus"></i>' :
                         '<i class="fa fa-circle circle greyCircle userStatus"></i>'}
@@ -221,7 +221,7 @@ $(document).on('click', '#addUser', function () {
                                                                         type="button"
                                                                         data-toggle="modal"
                                                                         data-target="#user-form-modal"
-                                                                        value="${data.user.id}">Edit
+                                                                        value="${data.user.id}">Редагувати
                                                                 </button>
                                                                 <button class="btn btn-sm btn-outline-secondary badge fa fa-trash delete"
                                                                         data-toggle="modal"
