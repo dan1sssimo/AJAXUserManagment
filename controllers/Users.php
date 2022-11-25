@@ -108,10 +108,9 @@ class Users extends Controller
             $textRole = $userRow['role'];
             $userRow['role'] = $this->role[$userRow['role']];
             $id = $userRow['id'];
-            unset($userRow['id']);
             $fields = ['firstname', 'lastname', 'status', 'role'];
             $RowFiltered = Utils::ArrayFilter($userRow, $fields);
-            $this->usersModel->UpdateUserInDB($RowFiltered);
+            $this->usersModel->UpdateUserInDB($userRow);
             $response = [
                 'status' => true,
                 'error' => null,

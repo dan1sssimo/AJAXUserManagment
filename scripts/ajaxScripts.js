@@ -22,7 +22,7 @@ function fetchUser() {
                                                             <span>${element.role === '1' ? 'User' : 'Admin'}</span>
                                                         </td>
                                                         <td class="text-center align-middle text-center">
-                                                              ${element.status === '1' ?
+                                                              ${element.status === 1 ?
                     '<i class="fa fa-circle active-circle userStatus"></i>' :
                     '<i class="fa fa-circle circle greyCircle userStatus"></i>'}
                                                         </td>
